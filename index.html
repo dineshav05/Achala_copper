@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Achala Copper Vending: Business Insight & Startup Guide</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Custom Palette & Utilities */
+        :root {
+            --color-copper: #B87333;
+            --color-copper-light: #E5A56F;
+            --color-patina: #2A9D8F;
+            --color-cream: #FDFBF7;
+            --color-charcoal: #264653;
+        }
+        body { font-family: 'Lato', sans-serif; background-color: var(--color-cream); color: var(--color-charcoal); }
+        h1, h2, h3, h4 { font-family: 'Playfair Display', serif; }
+        
+        .copper-gradient { background: linear-gradient(135deg, #B87333 0%, #E5A56F 50%, #B87333 100%); }
+        .text-copper { color: #B87333; }
+        .bg-patina { background-color: #2A9D8F; }
+        .border-copper { border-color: #B87333; }
+
+        /* Chart Container Styling - Mandatory */
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            height: 300px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        @media (min-width: 768px) {
+            .chart-container { height: 350px; }
+        }
+
+        /* Custom Scrollbar for panels */
+        .custom-scroll::-webkit-scrollbar { width: 6px; }
+        .custom-scroll::-webkit-scrollbar-track { background: #f1f1f1; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: #B87333; border-radius: 3px; }
+
+        /* Timeline Connector */
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background-color: #e5e7eb;
+            z-index: 0;
+        }
+    </style>
+    <!-- Chosen Palette: "Copper Heritage" - Warm Copper (#B87333) for branding, Patina Green (#2A9D8F) for eco-friendly accents, Cream (#FDFBF7) for background, Charcoal (#264653) for text readability. -->
+    
+    <!-- Application Structure Plan:
+         1. Hero Section: Immediate value proposition (Health + Tech + Heritage).
+         2. Analysis Dashboard: Interactive Pros/Cons and Market Value charts to answer "How does this business seem?".
+         3. Interactive Roadmap: Vertical step-by-step guide (from scratch to public places) with clickable details.
+         4. Operational Toolkit:
+            - ROI Calculator: User inputs variables (sales, rent) to see potential profit.
+            - Prerequisites Tab: Toggles for Skills, Finance, and Legal.
+         5. Empowerment Hub: Grid of Govt Schemes for Women Entrepreneurs.
+         This structure moves from "Why?" (Analysis) to "How?" (Roadmap) to "What do I need?" (Toolkit), facilitating a logical decision-making flow.
+    -->
+
+    <!-- Visualization & Content Choices:
+         1. Business Viability: Doughnut Chart (Cost Breakdown) & Bar Chart (Revenue Potential). Goal: Inform finance skills. Interaction: Hover for values.
+         2. Pros & Cons: Interactive Flip Cards or Toggle List. Goal: Compare business aspects. Interaction: Click to toggle.
+         3. Timeline: HTML/CSS Vertical flow. Goal: Organize process. Interaction: Scroll/Highlight.
+         4. Calculator: Input fields + JS Logic. Goal: Change inputs to see different outcomes.
+         CONFIRMATION: NO SVG graphics used. NO Mermaid JS used.
+    -->
+</head>
+<body class="antialiased min-h-screen flex flex-col">
+
+    <!-- Navbar -->
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 rounded-full copper-gradient flex items-center justify-center text-white font-bold">Cu</div>
+                <span class="text-xl font-bold tracking-wide">Achala Copper</span>
+            </div>
+            <div class="hidden md:flex space-x-8 text-sm font-semibold text-gray-600">
+                <a href="#analysis" class="hover:text-copper transition">Analysis</a>
+                <a href="#roadmap" class="hover:text-copper transition">Roadmap</a>
+                <a href="#calculator" class="hover:text-copper transition">ROI Calculator</a>
+                <a href="#schemes" class="hover:text-copper transition">Govt Schemes</a>
+            </div>
+            <!-- Mobile Menu Button (Simplified) -->
+            <button class="md:hidden text-gray-600" onclick="alert('Please use desktop for full menu experience or scroll down.')">☰</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="bg-white border-b border-gray-100">
+        <div class="container mx-auto px-6 py-16 text-center md:text-left flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2 mb-10 md:mb-0">
+                <h1 class="text-4xl md:text-5xl font-bold text-gray-800 leading-tight mb-6">
+                    Reviving Heritage through <br> <span class="text-copper">Smart Technology</span>
+                </h1>
+                <p class="text-lg text-gray-600 mb-8 leading-relaxed">
+                    A comprehensive guide to starting an <strong>Eco-Friendly Copper Bottle Vending Machine</strong> business in India. 
+                    Merging the Ayurvedic benefits of <em>Tamra Jal</em> with modern convenience to replace single-use plastics.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                    <button onclick="document.getElementById('analysis').scrollIntoView({behavior: 'smooth'})" class="px-8 py-3 rounded-full copper-gradient text-white font-semibold shadow-lg hover:shadow-xl transition transform hover:-translate-y-1">
+                        Start Research Analysis
+                    </button>
+                    <button onclick="document.getElementById('roadmap').scrollIntoView({behavior: 'smooth'})" class="px-8 py-3 rounded-full bg-white border-2 border-copper text-copper font-semibold hover:bg-gray-50 transition">
+                        View Process Guide
+                    </button>
+                </div>
+            </div>
+            <div class="md:w-1/2 flex justify-center">
+                <!-- Abstract Visual representation using CSS/HTML -->
+                <div class="relative w-64 h-80 bg-gray-100 rounded-3xl border-4 border-gray-800 shadow-2xl flex flex-col items-center justify-between p-4 overflow-hidden">
+                    <div class="w-full h-1/3 bg-blue-100 rounded-t-xl flex items-center justify-center opacity-50">
+                        <span class="text-4xl">💧</span>
+                    </div>
+                    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-32 h-40 bg-gradient-to-br from-[#B87333] to-[#E5A56F] rounded-lg shadow-inner flex items-center justify-center">
+                        <span class="text-white text-xs font-bold rotate-90 tracking-widest">COPPER</span>
+                    </div>
+                    <div class="w-full h-16 bg-gray-800 rounded-b-xl flex justify-center items-center gap-2">
+                        <div class="w-12 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                    </div>
+                    <!-- Decorative Elements -->
+                    <div class="absolute -right-4 -top-4 w-16 h-16 bg-yellow-400 rounded-full opacity-20 blur-xl"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- SECTION 1: Business Analysis & Value -->
+    <section id="analysis" class="py-16 bg-[#FDFBF7]">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4">Business Analysis & Value Proposition</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">
+                    Understanding the "Why" and "What". India is moving towards sustainable alternatives. 
+                    This dashboard breaks down the market potential, financial distribution, and the core pros/cons of the model.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                
+                <!-- Chart: Cost Breakdown -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                    <h3 class="text-xl font-semibold mb-4 text-center">Estimated Startup Cost Allocation</h3>
+                    <p class="text-sm text-gray-500 mb-6 text-center">Based on a typical single-unit setup (~₹1.5 - ₹2.5 Lakhs)</p>
+                    <div class="chart-container">
+                        <canvas id="costChart"></canvas>
+                    </div>
+                    <div class="mt-6 text-sm text-gray-600 bg-gray-50 p-4 rounded-lg">
+                        <strong>Insight:</strong> The Machine hardware is the largest capital expense (CapEx). Inventory (Copper bottles) is significant but rotates quickly. Marketing is crucial initially for trust.
+                    </div>
+                </div>
+
+                <!-- Pros & Cons Interactive -->
+                <div class="flex flex-col h-full">
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex-grow">
+                        <h3 class="text-xl font-semibold mb-6 text-center">SWOT Analysis: Pros & Cons</h3>
+                        
+                        <!-- Toggle Buttons -->
+                        <div class="flex justify-center gap-4 mb-6">
+                            <button onclick="updateProsCons('pros')" id="btn-pros" class="px-6 py-2 rounded-full bg-green-100 text-green-800 font-bold border border-green-200 hover:bg-green-200 transition">✅ Advantages</button>
+                            <button onclick="updateProsCons('cons')" id="btn-cons" class="px-6 py-2 rounded-full bg-red-50 text-red-800 font-medium border border-red-100 hover:bg-red-100 transition">⚠️ Challenges</button>
+                        </div>
+
+                        <!-- Content Area -->
+                        <div id="pros-cons-content" class="space-y-4">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Value in India Block -->
+            <div class="mt-12 bg-white rounded-xl shadow-sm p-8 border-l-4 border-copper">
+                <h3 class="text-2xl font-bold text-gray-800 mb-4">Value Addition in the Indian Market</h3>
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="p-4 bg-orange-50 rounded-lg">
+                        <div class="text-2xl mb-2">🕉️</div>
+                        <h4 class="font-bold text-gray-800 mb-2">Cultural Resonance</h4>
+                        <p class="text-sm text-gray-600">Indians already value "Tamra Jal" (Copper Water). No need to educate the market on health benefits, only on accessibility.</p>
+                    </div>
+                    <div class="p-4 bg-green-50 rounded-lg">
+                        <div class="text-2xl mb-2">🌿</div>
+                        <h4 class="font-bold text-gray-800 mb-2">Plastic Ban Alignment</h4>
+                        <p class="text-sm text-gray-600">With strict govt bans on single-use plastic, public places (railways, airports) are desperate for eco-friendly alternatives.</p>
+                    </div>
+                    <div class="p-4 bg-blue-50 rounded-lg">
+                        <div class="text-2xl mb-2">🤖</div>
+                        <h4 class="font-bold text-gray-800 mb-2">Automation & Scale</h4>
+                        <p class="text-sm text-gray-600">Low labor dependency. A single entrepreneur can manage 5-10 machines via a mobile app dashboard.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 2: Step-by-Step Process (The Roadmap) -->
+    <section id="roadmap" class="py-16 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4">From Scratch to Public Places</h2>
+                <p class="text-gray-600">A detailed step-by-step roadmap to launch your vending business.</p>
+            </div>
+
+            <div class="relative max-w-4xl mx-auto">
+                <!-- Vertical Line -->
+                <div class="hidden md:block timeline-line"></div>
+
+                <!-- Step 1 -->
+                <div class="relative z-10 mb-12 flex flex-col md:flex-row items-center">
+                    <div class="order-1 md:w-5/12 text-center md:text-right px-4">
+                        <h3 class="text-xl font-bold text-gray-800">1. Market Research & Plan</h3>
+                        <p class="text-sm text-gray-500 mt-2">Define your niche (Luxury malls vs. Railway stations) and budget.</p>
+                    </div>
+                    <div class="order-2 md:w-2/12 flex justify-center my-4 md:my-0">
+                        <div class="w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center text-white font-bold shadow-lg border-4 border-white">1</div>
+                    </div>
+                    <div class="order-3 md:w-5/12 px-4 bg-gray-50 p-4 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition">
+                        <ul class="text-sm text-gray-600 space-y-1 list-disc pl-4">
+                            <li>Identify footfall traffic.</li>
+                            <li>Analyze competitor pricing (Plastic bottles ₹20 vs Copper ₹500+?).</li>
+                            <li>Decide: Rent machine or Buy?</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="relative z-10 mb-12 flex flex-col md:flex-row items-center">
+                    <div class="order-1 md:order-3 md:w-5/12 text-center md:text-left px-4">
+                        <h3 class="text-xl font-bold text-gray-800">2. Sourcing Inventory</h3>
+                        <p class="text-sm text-gray-500 mt-2">The core product: Machine & Bottles.</p>
+                    </div>
+                    <div class="order-2 md:order-2 md:w-2/12 flex justify-center my-4 md:my-0">
+                        <div class="w-12 h-12 copper-gradient rounded-full flex items-center justify-center text-white font-bold shadow-lg border-4 border-white">2</div>
+                    </div>
+                    <div class="order-3 md:order-1 md:w-5/12 px-4 bg-orange-50 p-4 rounded-lg shadow-sm border border-orange-100 hover:shadow-md transition text-right">
+                        <ul class="text-sm text-gray-600 space-y-1 list-none">
+                            <li><strong>Machines:</strong> Contact OEMs in Delhi/Ahmedabad/Pune. Ensure UPI integration.</li>
+                            <li><strong>Bottles:</strong> Source directly from artisans in Moradabad/Mathura for best margins.</li>
+                            <li><strong>Quality:</strong> Lab test copper purity (99%).</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="relative z-10 mb-12 flex flex-col md:flex-row items-center">
+                    <div class="order-1 md:w-5/12 text-center md:text-right px-4">
+                        <h3 class="text-xl font-bold text-gray-800">3. Legal & Location</h3>
+                        <p class="text-sm text-gray-500 mt-2">Securing the spot and permissions.</p>
+                    </div>
+                    <div class="order-2 md:w-2/12 flex justify-center my-4 md:my-0">
+                        <div class="w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center text-white font-bold shadow-lg border-4 border-white">3</div>
+                    </div>
+                    <div class="order-3 md:w-5/12 px-4 bg-gray-50 p-4 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition">
+                        <ul class="text-sm text-gray-600 space-y-1 list-disc pl-4">
+                            <li>Sign Rent Agreement for 3-5 sq ft space.</li>
+                            <li><strong>Licenses:</strong> GST, Trade License, FSSAI (if dispensing water).</li>
+                            <li>Electrical safety certificate.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="relative z-10 flex flex-col md:flex-row items-center">
+                    <div class="order-1 md:order-3 md:w-5/12 text-center md:text-left px-4">
+                        <h3 class="text-xl font-bold text-gray-800">4. Launch & Marketing</h3>
+                        <p class="text-sm text-gray-500 mt-2">Go live and attract customers.</p>
+                    </div>
+                    <div class="order-2 md:order-2 md:w-2/12 flex justify-center my-4 md:my-0">
+                        <div class="w-12 h-12 bg-patina rounded-full flex items-center justify-center text-white font-bold shadow-lg border-4 border-white">4</div>
+                    </div>
+                    <div class="order-3 md:order-1 md:w-5/12 px-4 bg-green-50 p-4 rounded-lg shadow-sm border border-green-100 hover:shadow-md transition text-right">
+                        <ul class="text-sm text-gray-600 space-y-1 list-none">
+                            <li>Launch discounts (QR code coupons).</li>
+                            <li>Display benefits of Copper clearly on the machine.</li>
+                            <li>Set up regular restocking schedule.</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3: Operational Toolkit (Calculator & Requirements) -->
+    <section id="calculator" class="py-16 bg-[#FDFBF7] border-t border-gray-200">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center mb-8">Operational Toolkit</h2>
+            
+            <div class="grid lg:grid-cols-2 gap-12">
+                
+                <!-- ROI Calculator -->
+                <div class="bg-white p-8 rounded-2xl shadow-lg">
+                    <h3 class="text-xl font-bold mb-6 flex items-center gap-2">
+                        <span>🧮</span> Profitability Calculator (Monthly)
+                    </h3>
+                    
+                    <div class="space-y-4">
+                        <!-- Input 1 -->
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">Bottles Sold Per Day</label>
+                            <input type="range" id="salesInput" min="5" max="100" value="20" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-[#B87333]" oninput="calculateROI()">
+                            <div class="text-right text-copper font-bold" id="salesValue">20 units</div>
+                        </div>
+
+                        <!-- Input 2 -->
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-1">Selling Price (₹)</label>
+                                <input type="number" id="priceInput" value="650" class="w-full p-2 border border-gray-300 rounded focus:border-copper focus:outline-none" oninput="calculateROI()">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-1">Cost Price (₹)</label>
+                                <input type="number" id="costInput" value="350" class="w-full p-2 border border-gray-300 rounded focus:border-copper focus:outline-none" oninput="calculateROI()">
+                            </div>
+                        </div>
+
+                        <!-- Input 3 -->
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">Monthly Rent & Electricity (₹)</label>
+                            <input type="number" id="rentInput" value="15000" class="w-full p-2 border border-gray-300 rounded focus:border-copper focus:outline-none" oninput="calculateROI()">
+                        </div>
+                    </div>
+
+                    <hr class="my-6 border-dashed border-gray-300">
+
+                    <!-- Result -->
+                    <div class="text-center">
+                        <p class="text-gray-500 text-sm">Estimated Monthly Net Profit</p>
+                        <div class="text-4xl font-bold text-green-600 mt-2" id="profitResult">₹0</div>
+                        <p class="text-xs text-gray-400 mt-2">*Estimates exclude taxes and initial machine cost depreciation.</p>
+                    </div>
+                </div>
+
+                <!-- Requirements Tabs -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
+                    <h3 class="text-xl font-bold mb-6 flex items-center gap-2">
+                        <span>📋</span> Prerequisites Checklist
+                    </h3>
+                    
+                    <div class="flex border-b border-gray-200 mb-4">
+                        <button onclick="switchTab('skills')" class="tab-btn active px-4 py-2 font-medium text-copper border-b-2 border-copper focus:outline-none" data-tab="skills">Skills</button>
+                        <button onclick="switchTab('finance')" class="tab-btn px-4 py-2 font-medium text-gray-500 hover:text-copper focus:outline-none" data-tab="finance">Finance</button>
+                        <button onclick="switchTab('legal')" class="tab-btn px-4 py-2 font-medium text-gray-500 hover:text-copper focus:outline-none" data-tab="legal">Legal</button>
+                    </div>
+
+                    <div id="tab-content" class="h-64 overflow-y-auto custom-scroll pr-2">
+                        <!-- Content injected via JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 4: Govt Schemes for Women -->
+    <section id="schemes" class="py-16 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-10">
+                <span class="bg-purple-100 text-purple-800 text-xs font-bold px-3 py-1 rounded-full">WOMEN ENTREPRENEURSHIP</span>
+                <h2 class="text-3xl font-bold mt-2">Government Support & Funding</h2>
+                <p class="text-gray-600">Specific schemes in India to help women start this business.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Scheme Card 1 -->
+                <div class="bg-purple-50 p-6 rounded-xl hover:shadow-lg transition border border-purple-100">
+                    <h4 class="font-bold text-lg text-purple-900 mb-2">Mudra Yojana (Shishu/Kishor)</h4>
+                    <p class="text-sm text-gray-700 mb-4">Loans up to ₹50,000 (Shishu) or ₹5 Lakhs (Kishor) without collateral.</p>
+                    <div class="flex justify-between items-center text-xs font-semibold text-purple-800">
+                        <span>Ideal for: Machine Purchase</span>
+                        <span class="bg-white px-2 py-1 rounded">No Collateral</span>
+                    </div>
+                </div>
+
+                <!-- Scheme Card 2 -->
+                <div class="bg-pink-50 p-6 rounded-xl hover:shadow-lg transition border border-pink-100">
+                    <h4 class="font-bold text-lg text-pink-900 mb-2">Stand-Up India</h4>
+                    <p class="text-sm text-gray-700 mb-4">Bank loans between ₹10 Lakh and ₹1 Crore for at least one woman borrower per bank branch.</p>
+                    <div class="flex justify-between items-center text-xs font-semibold text-pink-800">
+                        <span>Ideal for: Scaling to 5+ Units</span>
+                        <span class="bg-white px-2 py-1 rounded">Long Term</span>
+                    </div>
+                </div>
+
+                <!-- Scheme Card 3 -->
+                <div class="bg-orange-50 p-6 rounded-xl hover:shadow-lg transition border border-orange-100">
+                    <h4 class="font-bold text-lg text-orange-900 mb-2">Stree Shakti Package</h4>
+                    <p class="text-sm text-gray-700 mb-4">For women with >50% ownership. Offers interest concessions (0.05%) on loans.</p>
+                    <div class="flex justify-between items-center text-xs font-semibold text-orange-800">
+                        <span>Ideal for: Working Capital</span>
+                        <span class="bg-white px-2 py-1 rounded">EDP Training Req</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-2xl font-bold mb-2">CopperVend India</h2>
+            <p class="text-gray-400 text-sm mb-4">Empowering health, heritage, and entrepreneurship.</p>
+            <div class="text-xs text-gray-500">
+                <p>&copy; 2024 Research Analysis Guide. Generated for Educational Purposes.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // --- 1. Data Definitions ---
+        const prosData = [
+            { icon: "🩺", title: "Health Trend", desc: "Rising awareness of Ayurveda makes copper bottles a desirable product." },
+            { icon: "♻️", title: "Eco-Friendly", desc: "Perfect replacement for banned single-use plastic bottles." },
+            { icon: "🔋", title: "Low Maintenance", desc: "Modern machines need minimal daily intervention compared to food vending." },
+            { icon: "📈", title: "High Margins", desc: "Sourcing direct from artisans (₹300) and selling at retail (₹700+) offers ~50% gross margin." }
+        ];
+
+        const consData = [
+            { icon: "💰", title: "High Initial Capex", desc: "Machines cost ₹1.5L - ₹3L. Copper inventory is also expensive." },
+            { icon: "🧼", title: "Oxidation Issues", desc: "Copper tarnishes. Unsold inventory needs polishing/maintenance to look premium." },
+            { icon: "📍", title: "Location Dependency", desc: "Success is 90% dependent on high-footfall, premium locations (Airports, Malls)." },
+            { icon: "🔨", title: "Vandalism Risk", desc: "Public placement requires sturdy, secure machines and insurance." }
+        ];
+
+        const tabContentData = {
+            skills: `
+                <ul class="space-y-3">
+                    <li class="flex items-start"><span class="text-copper mr-2">✓</span> <span><strong>Sourcing:</strong> Ability to negotiate with Moradabad artisans for bulk rates.</span></li>
+                    <li class="flex items-start"><span class="text-copper mr-2">✓</span> <span><strong>Tech Savvy:</strong> Managing inventory via the machine's IoT dashboard/App.</span></li>
+                    <li class="flex items-start"><span class="text-copper mr-2">✓</span> <span><strong>Marketing:</strong> Creating attractive branding to justify the premium price point.</span></li>
+                </ul>
+            `,
+            finance: `
+                <ul class="space-y-3">
+                    <li class="flex items-start"><span class="text-copper mr-2">✓</span> <span><strong>Machine Cost:</strong> ₹1,50,000 - ₹2,50,000 (One time).</span></li>
+                    <li class="flex items-start"><span class="text-copper mr-2">✓</span> <span><strong>Inventory:</strong> ₹50,000 (Initial stock of ~100-150 bottles).</span></li>
+                    <li class="flex items-start"><span class="text-copper mr-2">✓</span> <span><strong>Space Rental:</strong> ₹5,000 - ₹20,000/month (varies by city).</span></li>
+                    <li class="flex items-start"><span class="text-copper mr-2">✓</span> <span><strong>Security Deposit:</strong> Often required for premium mall spots.</span></li>
+                </ul>
+            `,
+            legal: `
+                <ul class="space-y-3">
+                    <li class="flex items-start"><span class="text-copper mr-2">✓</span> <span><strong>Business Registration:</strong> Sole Proprietorship or LLC.</span></li>
+                    <li class="flex items-start"><span class="text-copper mr-2">✓</span> <span><strong>GST Registration:</strong> Mandatory for vending operations.</span></li>
+                    <li class="flex items-start"><span class="text-copper mr-2">✓</span> <span><strong>FSSAI License:</strong> Mandatory if the machine also dispenses water.</span></li>
+                    <li class="flex items-start"><span class="text-copper mr-2">✓</span> <span><strong>Trade License:</strong> From local municipal corporation.</span></li>
+                </ul>
+            `
+        };
+
+        // --- 2. Chart Initialization ---
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            // Cost Breakdown Chart
+            const ctxCost = document.getElementById('costChart').getContext('2d');
+            new Chart(ctxCost, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Machine (Hardware)', 'Inventory (Copper)', 'Location Deposit', 'Marketing/Branding', 'Licenses/Misc'],
+                    datasets: [{
+                        data: [60, 20, 10, 5, 5],
+                        backgroundColor: ['#B87333', '#E5A56F', '#264653', '#2A9D8F', '#E9C46A'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'right', labels: { boxWidth: 12 } },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.label + ': ' + context.raw + '%';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Initialize Pros/Cons
+            updateProsCons('pros');
+            
+            // Initialize Tabs
+            switchTab('skills');
+
+            // Initialize Calculator
+            calculateROI();
+        });
+
+        // --- 3. Interaction Logic ---
+
+        // Pros vs Cons Toggle
+        function updateProsCons(type) {
+            const container = document.getElementById('pros-cons-content');
+            const data = type === 'pros' ? prosData : consData;
+            const btnPros = document.getElementById('btn-pros');
+            const btnCons = document.getElementById('btn-cons');
+
+            // Style toggling
+            if (type === 'pros') {
+                btnPros.classList.add('ring-2', 'ring-green-400', 'bg-green-200');
+                btnCons.classList.remove('ring-2', 'ring-red-400', 'bg-red-100');
+                btnCons.classList.add('bg-red-50');
+            } else {
+                btnCons.classList.add('ring-2', 'ring-red-400', 'bg-red-200');
+                btnPros.classList.remove('ring-2', 'ring-green-400', 'bg-green-200');
+                btnPros.classList.add('bg-green-50');
+            }
+
+            // Content Injection
+            container.innerHTML = data.map(item => `
+                <div class="flex items-start p-3 rounded-lg ${type === 'pros' ? 'bg-green-50' : 'bg-red-50'} animate-fade-in">
+                    <div class="text-2xl mr-3">${item.icon}</div>
+                    <div>
+                        <h4 class="font-bold text-gray-800 text-sm">${item.title}</h4>
+                        <p class="text-xs text-gray-600 mt-1">${item.desc}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Requirements Tab Switcher
+        function switchTab(tabName) {
+            const buttons = document.querySelectorAll('.tab-btn');
+            const contentDiv = document.getElementById('tab-content');
+            
+            buttons.forEach(btn => {
+                if(btn.dataset.tab === tabName) {
+                    btn.classList.add('text-copper', 'border-b-2', 'border-copper');
+                    btn.classList.remove('text-gray-500');
+                } else {
+                    btn.classList.remove('text-copper', 'border-b-2', 'border-copper');
+                    btn.classList.add('text-gray-500');
+                }
+            });
+
+            contentDiv.innerHTML = tabContentData[tabName];
+        }
+
+        // ROI Calculator
+        function calculateROI() {
+            const dailySales = parseInt(document.getElementById('salesInput').value);
+            const price = parseFloat(document.getElementById('priceInput').value);
+            const cost = parseFloat(document.getElementById('costInput').value);
+            const rent = parseFloat(document.getElementById('rentInput').value);
+
+            // Update UI for Range Slider
+            document.getElementById('salesValue').innerText = dailySales + " units";
+
+            // Calculation
+            // Monthly Sales = Daily * 30
+            const monthlyRevenue = dailySales * price * 30;
+            const monthlyCOGS = dailySales * cost * 30; // Cost of Goods Sold
+            const grossMargin = monthlyRevenue - monthlyCOGS;
+            const netProfit = grossMargin - rent;
+
+            const resultElement = document.getElementById('profitResult');
+            resultElement.innerText = "₹" + netProfit.toLocaleString('en-IN');
+
+            if (netProfit < 0) {
+                resultElement.classList.remove('text-green-600');
+                resultElement.classList.add('text-red-500');
+            } else {
+                resultElement.classList.remove('text-red-500');
+                resultElement.classList.add('text-green-600');
+            }
+        }
+    </script>
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+</body>
+</html>
